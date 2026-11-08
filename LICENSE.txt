@@ -1,0 +1,7 @@
+Garage Gestion
+Copyright (c) Aymen AHMED ESSALAH
+Tous droits réservés.
+
+Ce logiciel est propriétaire. Aucun droit d'utilisation, de reproduction,
+de modification, de distribution ou de commercialisation n'est accordé
+sans autorisation écrite préalable du titulaire des droits.
