@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
- <Product Id="*" Name="Garage Gestion" Language="1036" Version="0.2.0.0" Manufacturer="Aymen AHMED ESSALAH" UpgradeCode="8C8F31D2-43A0-4C84-9E37-3F50F2C0C901">
-  <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" Description="Logiciel de gestion de garage" />
+ <Product Id="*" Name="Garage Gestion" Language="1036" Version="0.3.0.0" Manufacturer="Aymen AHMED ESSALAH" UpgradeCode="8C8F31D2-43A0-4C84-9E37-3F50F2C0C901">
+  <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" Description="Logiciel de gestion de garage automobile" />
   <MajorUpgrade DowngradeErrorMessage="Une version plus recente de Garage Gestion est deja installee." />
   <MediaTemplate EmbedCab="yes" />
   <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
   <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Lancer Garage Gestion apres l'installation" />
   <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+  <Property Id="ARPPRODUCTICON" Value="GarageGestionIcon" />
+  <Icon Id="GarageGestionIcon" SourceFile="$(var.AppOutput)\GarageGestion.exe" />
   <WixVariable Id="WixUILicenseRtf" Value="installer\license.rtf" />
   <Directory Id="TARGETDIR" Name="SourceDir">
    <Directory Id="ProgramFilesFolder">
     <Directory Id="INSTALLFOLDER" Name="Garage Gestion" />
    </Directory>
-   <Directory Id="ProgramMenuFolder">
+   <Directory Id="CommonProgramsFolder">
     <Directory Id="ApplicationProgramsFolder" Name="Garage Gestion" />
    </Directory>
-   <Directory Id="DesktopFolder" />
+   <Directory Id="CommonDesktopFolder" />
   </Directory>
   <DirectoryRef Id="INSTALLFOLDER">
    <Component Id="MainExecutable" Guid="*">
     <File Id="GarageGestionExe" Source="$(var.AppOutput)\GarageGestion.exe" KeyPath="yes" />
    </Component>
    <Component Id="ApplicationShortcuts" Guid="*">
-    <Shortcut Id="StartMenuShortcut" Name="Garage Gestion" Description="Gestion de garage automobile" Target="[INSTALLFOLDER]GarageGestion.exe" WorkingDirectory="INSTALLFOLDER" Directory="ApplicationProgramsFolder" />
-    <Shortcut Id="DesktopShortcut" Name="Garage Gestion" Description="Gestion de garage automobile" Target="[INSTALLFOLDER]GarageGestion.exe" WorkingDirectory="INSTALLFOLDER" Directory="DesktopFolder" />
+    <Shortcut Id="StartMenuShortcut" Name="Garage Gestion" Description="Gestion de garage automobile" Target="[INSTALLFOLDER]GarageGestion.exe" WorkingDirectory="INSTALLFOLDER" Directory="ApplicationProgramsFolder" Icon="GarageGestionIcon" />
+    <Shortcut Id="DesktopShortcut" Name="Garage Gestion" Description="Gestion de garage automobile" Target="[INSTALLFOLDER]GarageGestion.exe" WorkingDirectory="INSTALLFOLDER" Directory="CommonDesktopFolder" Icon="GarageGestionIcon" />
     <RemoveFolder Id="RemoveProgramMenuFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
     <RegistryValue Root="HKLM" Key="Software\Aymen AHMED ESSALAH\Garage Gestion" Name="installed" Type="integer" Value="1" KeyPath="yes" />
    </Component>
