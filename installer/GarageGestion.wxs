@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
- <Product Id="*" Name="Garage Gestion" Language="1036" Version="0.1.0.0" Manufacturer="Aymen AHMED ESSALAH" UpgradeCode="8C8F31D2-43A0-4C84-9E37-3F50F2C0C901">
-  <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+ <Product Id="*" Name="Garage Gestion" Language="1036" Version="0.2.0.0" Manufacturer="Aymen AHMED ESSALAH" UpgradeCode="8C8F31D2-43A0-4C84-9E37-3F50F2C0C901">
+  <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" Description="Logiciel de gestion de garage" />
   <MajorUpgrade DowngradeErrorMessage="Une version plus recente de Garage Gestion est deja installee." />
   <MediaTemplate EmbedCab="yes" />
-  <Directory Id="TARGETDIR" Name="SourceDir"><Directory Id="ProgramFilesFolder"><Directory Id="INSTALLFOLDER" Name="Garage Gestion">
-   <Component Id="MainExecutable" Guid="*"><File Id="GarageGestionExe" Source="$(var.AppOutput)\GarageGestion.exe" KeyPath="yes" /></Component>
-  </Directory></Directory></Directory>
-  <Feature Id="MainFeature" Title="Garage Gestion" Level="1"><ComponentRef Id="MainExecutable" /></Feature>
+  <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+  <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Lancer Garage Gestion apres l'installation" />
+  <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+  <WixVariable Id="WixUILicenseRtf" Value="installer\license.rtf" />
+  <Directory Id="TARGETDIR" Name="SourceDir">
+   <Directory Id="ProgramFilesFolder">
+    <Directory Id="INSTALLFOLDER" Name="Garage Gestion" />
+   </Directory>
+   <Directory Id="ProgramMenuFolder">
+    <Directory Id="ApplicationProgramsFolder" Name="Garage Gestion" />
+   </Directory>
+   <Directory Id="DesktopFolder" />
+  </Directory>
+  <DirectoryRef Id="INSTALLFOLDER">
+   <Component Id="MainExecutable" Guid="*">
+    <File Id="GarageGestionExe" Source="$(var.AppOutput)\GarageGestion.exe" KeyPath="yes" />
+   </Component>
+   <Component Id="ApplicationShortcuts" Guid="*">
+    <Shortcut Id="StartMenuShortcut" Name="Garage Gestion" Description="Gestion de garage automobile" Target="[INSTALLFOLDER]GarageGestion.exe" WorkingDirectory="INSTALLFOLDER" Directory="ApplicationProgramsFolder" />
+    <Shortcut Id="DesktopShortcut" Name="Garage Gestion" Description="Gestion de garage automobile" Target="[INSTALLFOLDER]GarageGestion.exe" WorkingDirectory="INSTALLFOLDER" Directory="DesktopFolder" />
+    <RemoveFolder Id="RemoveProgramMenuFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
+    <RegistryValue Root="HKLM" Key="Software\Aymen AHMED ESSALAH\Garage Gestion" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+   </Component>
+  </DirectoryRef>
+  <Feature Id="MainFeature" Title="Garage Gestion" Level="1">
+   <ComponentRef Id="MainExecutable" />
+   <ComponentRef Id="ApplicationShortcuts" />
+  </Feature>
+  <CustomAction Id="LaunchApplication" FileKey="GarageGestionExe" ExeCommand="" Execute="immediate" Return="asyncNoWait" />
+  <UI>
+   <UIRef Id="WixUI_InstallDir" />
+   <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+   <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return">1</Publish>
+  </UI>
  </Product>
 </Wix>
