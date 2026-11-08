@@ -1,4 +1,4 @@
-name: Build Garage Gestion MSI
+name: Build Garage Gestion Installer
 on:
   push:
   workflow_dispatch:
@@ -12,21 +12,34 @@ jobs:
       - name: Locate WiX Toolset
         shell: powershell
         run: |
-          $wix = "${env:ProgramFiles(x86)}\WiX Toolset v3.14\bin"
-          if (!(Test-Path "$wix\candle.exe")) { throw "WiX Toolset 3.14 not found on runner." }
+          $wix = "${env:ProgramFiles(x86)}\\WiX Toolset v3.14\\bin"
+          if (!(Test-Path "$wix\\candle.exe")) { throw "WiX Toolset 3.14 not found on runner." }
           Add-Content -Path $env:GITHUB_PATH -Value $wix
+      - name: Download .NET Framework 4.8 offline installer
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2088631" -OutFile "$PWD\\NDP48-x86-x64-AllOS-ENU.exe"
       - name: Build application
         shell: powershell
         run: msbuild src/GarageGestion/GarageGestion.csproj /p:Configuration=Release /p:Platform=AnyCPU /m
       - name: Build MSI
         shell: powershell
         run: |
-          candle.exe -dAppOutput="$PWD\src\GarageGestion\bin\Release" -out installer\GarageGestion.wixobj installer\GarageGestion.wxs
+          candle.exe -ext WixUIExtension -dAppOutput="$PWD\\src\\GarageGestion\\bin\\Release" -out installer\\GarageGestion.wixobj installer\\GarageGestion.wxs
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          light.exe -out GarageGestion-Setup.msi installer\GarageGestion.wixobj
+          light.exe -ext WixUIExtension -out GarageGestion-Setup.msi installer\\GarageGestion.wixobj
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build setup bootstrapper
+        shell: powershell
+        run: |
+          candle.exe -ext WixBalExtension -ext WixUtilExtension -dNetFx48Exe="$PWD\\NDP48-x86-x64-AllOS-ENU.exe" -out installer\\Bundle.wixobj installer\\Bundle.wxs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          light.exe -ext WixBalExtension -ext WixUtilExtension -out GarageGestion-Setup.exe installer\\Bundle.wixobj
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/upload-artifact@v4
         with:
           name: GarageGestion-Setup
-          path: GarageGestion-Setup.msi
+          path: |
+            GarageGestion-Setup.exe
+            GarageGestion-Setup.msi
           if-no-files-found: error
