@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+ <Product Id="*" Name="Garage Gestion" Language="1036" Version="0.1.0.0" Manufacturer="Aymen AHMED ESSALAH" UpgradeCode="8C8F31D2-43A0-4C84-9E37-3F50F2C0C901">
+  <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine" />
+  <MajorUpgrade DowngradeErrorMessage="Une version plus récente de Garage Gestion est déjà installée." />
+  <MediaTemplate EmbedCab="yes" />
+  <Directory Id="TARGETDIR" Name="SourceDir"><Directory Id="ProgramFilesFolder"><Directory Id="INSTALLFOLDER" Name="Garage Gestion">
+   <Component Id="MainExecutable" Guid="*"><File Id="GarageGestionExe" Source="$(var.AppOutput)\GarageGestion.exe" KeyPath="yes" /></Component>
+  </Directory></Directory></Directory>
+  <Feature Id="MainFeature" Title="Garage Gestion" Level="1"><ComponentRef Id="MainExecutable" /></Feature>
+ </Product>
+</Wix>
