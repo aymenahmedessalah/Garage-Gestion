@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+ <Bundle Name="Garage Gestion" Version="0.2.0.0" Manufacturer="Aymen AHMED ESSALAH" UpgradeCode="E5A4B8C1-29D7-4D90-9C17-7A02F6D33A10" Compressed="yes">
+  <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+   <bal:WixStandardBootstrapperApplication LicenseFile="license.rtf" />
+  </BootstrapperApplicationRef>
+  <util:RegistrySearch Id="NetFx48Release64" Root="HKLM" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Value="Release" Variable="NetFx48Release64" Result="value" Win64="yes" />
+  <util:RegistrySearch Id="NetFx48Release32" Root="HKLM" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Value="Release" Variable="NetFx48Release32" Result="value" Win64="no" />
+  <Chain>
+   <ExePackage Id="NetFx48" DisplayName=".NET Framework 4.8" SourceFile="$(var.NetFx48Exe)" InstallCommand="/q /norestart" DetectCondition="(NetFx48Release64 >= 528040) OR (NetFx48Release32 >= 528040)" Permanent="yes" Vital="yes" Compressed="yes" />
+   <MsiPackage Id="GarageGestionMsi" SourceFile="GarageGestion-Setup.msi" DisplayInternalUI="yes" Visible="yes" Vital="yes" />
+  </Chain>
+ </Bundle>
+</Wix>
