@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
  <Bundle Name="Garage Gestion" Version="0.2.0.0" Manufacturer="Aymen AHMED ESSALAH" UpgradeCode="E5A4B8C1-29D7-4D90-9C17-7A02F6D33A10" Compressed="yes">
   <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
-   <bal:WixStandardBootstrapperApplication LicenseFile="license.rtf" />
+   <bal:WixStandardBootstrapperApplication LicenseFile="installer\\license.rtf" />
   </BootstrapperApplicationRef>
   <util:RegistrySearch Id="NetFx48Release64" Root="HKLM" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Value="Release" Variable="NetFx48Release64" Result="value" Win64="yes" />
   <util:RegistrySearch Id="NetFx48Release32" Root="HKLM" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Value="Release" Variable="NetFx48Release32" Result="value" Win64="no" />
