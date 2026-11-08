@@ -1,0 +1,15 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D8F5E4B1-3A8A-4C6D-9F0A-21A7B33C0101}</ProjectGuid>
+    <OutputType>WinExe</OutputType><RootNamespace>GarageGestion</RootNamespace><AssemblyName>GarageGestion</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion><FileAlignment>512</FileAlignment><LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget><OutputPath>bin\Release\</OutputPath><Optimize>true</Optimize><DebugType>pdbonly</DebugType><DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup><Reference Include="System" /><Reference Include="System.Core" /><Reference Include="System.Drawing" /><Reference Include="System.Windows.Forms" /></ItemGroup>
+  <ItemGroup><Compile Include="Program.cs" /><Compile Include="MainForm.cs" /><Compile Include="Properties\AssemblyInfo.cs" /></ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
