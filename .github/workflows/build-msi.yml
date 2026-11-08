@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install WiX Toolset 3.14
         shell: powershell
-        run: choco install wixtoolset --version=3.14.1 -y --no-progress
+        run: choco install wixtoolset -y --no-progress --ignore-checksums
       - name: Build application
         shell: powershell
         run: msbuild src/GarageGestion/GarageGestion.csproj /p:Configuration=Release /p:Platform=AnyCPU /m
